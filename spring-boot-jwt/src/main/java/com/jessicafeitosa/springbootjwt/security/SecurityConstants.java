@@ -1,4 +1,4 @@
-package com.jessicafeitosa.springbootjwt.controller;
+package com.jessicafeitosa.springbootjwt.security;
 
 public class SecurityConstants {
 	
