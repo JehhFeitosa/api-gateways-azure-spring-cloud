@@ -13,48 +13,39 @@ import org.springframework.stereotype.Service;
 
 import com.jessicafeitosa.springbootjwt.data.UserData;
 
-
 @Service
-public class UserDatailServiceImpl implements UserDetailsService {
-	
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	public UserDatailServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder) {
+public class UserDetailServiceImpl implements UserDetailsService {
+
+	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+	public void UserDatailServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
-	
-	
 
 	@Override
-	public UserDetails loadUserByUsername (String userName) throws UsernameNotFoundException{
-		
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+
 		UserData user = findUser(userName);
-		if(user == null) {
+		if (user == null) {
 			throw new UsernameNotFoundException(userName);
 		}
-		
+
 		return new User(user.getUserName(), user.getPassword(), Collections.emptyList());
 	}
-	
-	
-	
+
 	private UserData findUser(String userName) {
-		
+
 		UserData user = new UserData();
 		user.setUserName("admin");
 		user.setPassword(bCryptPasswordEncoder.encode("nimda"));
 		return user;
 	}
-	
-	
-	
-	public List<UserData> listUsers(){
+
+	public List<UserData> listUsers() {
 		ArrayList<UserData> lst = new ArrayList<>();
-		lst.add(findUser( "admin"));
+		lst.add(findUser("admin"));
 		return lst;
-		
+
 	}
-	
-	
 
 }
